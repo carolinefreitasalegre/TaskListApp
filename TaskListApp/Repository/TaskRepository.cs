@@ -14,18 +14,19 @@ namespace TaskListApp.Repository
             _dapperContext = dapperContext;
         }
 
-        public TaskItem AddTask(TaskItem task)
+        public TaskItem AddTask(TaskItem task, int userId)
         {
            using(var connection = _dapperContext.CreateConnection()) 
            {
-                var sql = @"INSERT INTO [TaskItem]([Title], [Deadline], [Status], [Urgency]) VALUES (@Title, @Deadline, @Status, @Urgency)";
+                var sql = @"INSERT INTO [TaskItem]([Title], [Deadline], [Status], [Urgency], [UserId]) VALUES (@Title, @Deadline, @Status, @Urgency, @UserId)";
 
                 connection.Execute(sql, new
                 {
                     task.Title,
                     task.Deadline,
                     task.Status,
-                    task.Urgency
+                    task.Urgency,
+                    task.UserId
                 });
 
                 return task;

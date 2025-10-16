@@ -13,5 +13,7 @@ namespace TaskListApp.Models
         public EPerfilType PerfilType { get; set; }
         public string Email { get; set; }
         public Boolean Ativo { get; set; }
+
+        public List<TaskItem> Tasks { get; set; } = new();
     }
 }

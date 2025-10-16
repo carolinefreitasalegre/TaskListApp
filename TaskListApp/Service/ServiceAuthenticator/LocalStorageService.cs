@@ -8,6 +8,9 @@ namespace TaskListApp.Service.ServiceAuthenticator
 {
     public class LocalStorageService : ILocalStorageService
     {
+       
+   
+    
         private const string KEY_TOKEN = "token";
 
         protected IJSRuntime JSRuntime { get; }
@@ -37,13 +40,13 @@ namespace TaskListApp.Service.ServiceAuthenticator
             {
                 var token = await GetTokenAsync();
 
-                if(token != null)
+                if (token != null)
                 {
                     var handler = new JwtSecurityTokenHandler();
                     var jsonToken = handler.ReadToken(token) as JwtSecurityToken;
                     var claims = jsonToken?.Claims;
 
-                    if(claims != null && claims.Any())
+                    if (claims != null && claims.Any())
                     {
                         var id = claims.FirstOrDefault(claim => "nameid".Equals(claim.Type, StringComparison.InvariantCultureIgnoreCase))?.Value;
                         var nome = claims.FirstOrDefault(claim => "nome".Equals(claim.Type, StringComparison.InvariantCultureIgnoreCase))?.Value;
@@ -128,11 +131,16 @@ namespace TaskListApp.Service.ServiceAuthenticator
         {
             StringBuilder stringBuilder = new StringBuilder();
 
-            for (int i = original.Length - 1; i >0 ; i--)
+            for (int i = original.Length - 1; i > 0; i--)
             {
                 stringBuilder.Append(original[i]);
             }
             return stringBuilder.ToString();
         }
+
+
+
+
     }
+
 }

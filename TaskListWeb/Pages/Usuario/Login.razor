@@ -1,0 +1,126 @@
+﻿@using Microsoft.JSInterop
+@using Radzen.Blazor
+@using TaskListApp.DTO
+@using TaskListApp.Service.Api
+@using TaskListApp.Service.ServiceAuthenticator
+@using TaskListWeb.Shared
+@inject IUserServiceApi userService
+@inject ILocalStorageService localStorageService
+@inject IJSRuntime JSRuntime
+
+
+@page "/"
+@layout LoginLayout
+
+    <RadzenRow Gap="0" Class="rz-my-12 rz-mx-auto rz-border-radius-6 rz-shadow-10" Style="width: 100%; max-width: 800px; overflow: hidden;">
+        <RadzenColumn Size="12" SizeMD="6">
+            <RadzenCard Class="rz-shadow-0 rz-border-radius-0 rz-text-align-center rz-p-12" Style="height: 100%; background: var(--rz-primary) no-repeat 100% 70% fixed ">
+                <RadzenImage Style="width:50%; padding-bottom:20px" Path="imagens/logo.png" AlternateText="logo task page" />
+                <RadzenText TextStyle="TextStyle.DisplayH3" TagName="TagName.H2" Class="rz-color-white rz-mb-6">Bem Vindo!</RadzenText>
+                <RadzenText TextStyle="TextStyle.Body2" Class="rz-color-white">Efetue o login para começar a utilizar o sistema.</RadzenText>
+            </RadzenCard>
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6">
+            <RadzenCard Class="rz-shadow-0 rz-border-radius-0 rz-p-12">
+                <RadzenText TextStyle="TextStyle.H5" TagName="TagName.H2" Class="rz-mb-6">
+                    Login
+                </RadzenText>
+                @*@if (FazendoLogin)
+                {
+                    <LoadingComponent />
+                } *@
+                @* else
+                { *@
+                <RadzenTemplateForm Data=@("LOGIN")>
+                    <RadzenLogin LoginText="Entrar"
+                                 AllowRegister="false"
+                                 AllowResetPassword="false"
+                                 UserText="Usuário"
+                                 PasswordText="Senha"
+                                 ResetPasswordText="Esqueceu sua senha?"
+                                 RegisterText="Criar conta"
+                                 RegisterMessageText="Não tem uma conta ainda?"
+                                 PasswordAutoCompleteType="AutoCompleteType.CurrentPassword"
+                                 UserNameAutoCompleteType="AutoCompleteType.Username"
+                                 Login=@(args => OnLogin(args))
+                                 ResetPassword=@(usuario => OnResetPassword(usuario))
+                                 Register=@(args => OnRegister()) />
+                </RadzenTemplateForm>
+                @* } *@
+
+            </RadzenCard>
+        </RadzenColumn>
+    </RadzenRow>
+
+
+
+@code {
+    public bool Renderizado { get; set; } = true;
+    public bool FazendoLogin { get; set; } = false;
+    
+   
+
+    // protected override  async Task OnAfterRenderAsync(bool firstRender)
+    // {
+    //     if (firstRender)
+    //     {
+    //         var tokenAtivo = await localStorageService.TokenActive();
+    //         if (tokenAtivo)
+    //         {
+    //             Renderizado = true;
+
+    //             var user = await localStorageService.GetDateUSerAsync();
+
+    //         }
+
+    //         if(Renderizado == false)
+    //         {
+    //             Renderizado = true;
+    //             StateHasChanged();
+    //         }
+    //         await base.OnAfterRenderAsync(firstRender);
+    //     }
+
+    // }
+
+    void OnRegister()
+    {
+    }
+
+    void OnResetPassword(string nomeUsuario)
+    {
+    }
+
+    async void OnLogin(LoginArgs args)
+    {
+        try
+        {
+            this.FazendoLogin = true;
+            var dto = new LoginDto
+            {
+                Email = args.Username,
+                Senha = args.Password
+            };
+
+            var retorno = await this.userService.Authenticator(dto);
+
+            if (retorno != null)
+            {
+
+                await localStorageService.InsertUpdateTokenAsync(retorno.Token);
+
+                var usuario = await localStorageService.GetDateUSerAsync();
+
+              
+            }
+
+        }
+        catch (Exception ex)
+        {
+            
+            this.FazendoLogin = false;
+            this.StateHasChanged();
+        }
+
+    }
+}

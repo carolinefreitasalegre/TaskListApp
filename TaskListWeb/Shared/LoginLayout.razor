@@ -1,0 +1,23 @@
+﻿@using Microsoft.JSInterop
+@inherits LayoutComponentBase
+@using TaskListWeb.Shared
+
+@inject IJSRuntime JSRuntime
+@inject NavigationManager NavigationManager
+@* @inject DialogService DialogService *@
+@* @inject ContextMenuService ContextMenuService *@
+@* @inject TooltipService TooltipService  *@
+
+@* <RadzenDialog @rendermode="@RenderMode.InteractiveWebAssembly" /> *@
+@* <RadzenNotification @rendermode="@RenderMode.InteractiveWebAssembly" /> *@
+
+
+<div class="page">
+    <main>
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+
+

@@ -4,11 +4,24 @@ using System.Text;
 using TaskListApp.DataContext;
 using TaskListApp.Repository;
 using TaskListApp.Repository.Interfaces;
+using TaskListApp.Service.Api;
+using TaskListApp.Service.ServiceAuthenticator;
+using IHttpClientFactory = TaskListApp.Service.ServiceAuthenticator.IHttpClientFactory;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddScoped<IHttpClientFactory, HttpClientFactory>();
+
+
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<ILocalStorageService, LocalStorageService>();
+builder.Services.AddScoped<IUserServiceApi, UserServiceApi>();
+
+
 builder.Services.AddScoped<IDapperContext, DapperContext>();
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
 
 // Add services to the container.
 builder.Services.AddControllers();

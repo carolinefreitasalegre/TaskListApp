@@ -1,0 +1,51 @@
+﻿<div class="top-row ps-3 navbar navbar-dark" style="background-color:var(--rz-primary)">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+            <RadzenImage Style="height:40px" Path="" AlternateText="logo triagem" />
+        </a>
+    </div>
+</div>
+
+<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
+
+<div class="nav-scrollable" style="background-color:var(--rz-primary)">
+    <nav class="flex-column">
+        <div class="nav-item px-3">
+            <NavLink class="nav-link collapse" href="dashboard">
+                <span class="bi bi-caret-right" aria-hidden="true"></span><b>Dashboard</b>
+            </NavLink>
+        </div>
+        <GrupoCadastros />
+        <GrupoAcessos />
+        <GrupoOperacoes />
+        <GrupoFinanceiro />
+
+    </nav>
+</div>
+
+
+<style>
+    .nav-item:first-of-type {
+        padding-top: 0px !important;
+    }
+
+    .nav-item .nav-link {
+        height: 35px !important;
+        line-height: 35px !important;
+    }
+
+    .item-menu:focus
+    {
+        background-color: rgba(255, 255, 255, 0.7);
+    }
+    .submenu {
+        padding: 0px;
+    }
+
+    .itemMenu {
+        background-color: var(--rz-primary);
+        padding: 10px;
+        font-size: 18px;
+        color: rgba(255, 255, 255, 0.7);
+    }
+</style>
